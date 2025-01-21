@@ -36,17 +36,10 @@ public class Main {
         String uploadFiles = "";
         boolean logFile = false;
         for (String arg : args) {
-            if (arg.toLowerCase().contains("-uploadfiles")) {
-                uploadFiles = arg.split("=")[1];
-                break;
-            } else if (arg.toLowerCase().contains("-checklogs")) {
+            if (arg.toLowerCase().contains("-checklogs")) {
                 logFile = true;
                 break;
             }
-        }
-
-        if (!uploadFiles.isEmpty()) {
-            uploadFiles(uploadFiles);
         }
 
         if (logFile) {
@@ -188,31 +181,4 @@ public class Main {
         System.out.print("\r" + phase + ": " + String.format("%.2f%%", percentage) + " processed.");
     }
 
-    private static void uploadFiles(String uploadFiles) throws IOException {
-        File uploadTxtFile = new File(uploadFiles);
-        List<String> lines = Files.readAllLines(uploadTxtFile.toPath());
-        for (String line : lines) {
-            HttpClient httpClient = HttpClient.newHttpClient();
-            Path file = Path.of(line);
-
-            String content = Files.readString(file);
-            JSONObject jsonObject = new JSONObject(content);
-            try {
-                HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create("https://fhir.ecqm.icfcloud.com/fhir/MeasureReport"))
-                        .header("Content-Type", "application/fhir+json")
-                        .POST(HttpRequest.BodyPublishers.ofString(jsonObject.toString()))
-                        .build();
-
-                // Send the request and get the response
-                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-
-                // log the response
-                System.out.println("\n\r\n\rUploaded resource to: https://fhir.ecqm.icfcloud.com/fhir/\n\r\tResponse:\n\r" + response.body());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
