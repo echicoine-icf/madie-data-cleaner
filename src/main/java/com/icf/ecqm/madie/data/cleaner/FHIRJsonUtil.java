@@ -3,7 +3,6 @@ package com.icf.ecqm.madie.data.cleaner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -279,7 +278,7 @@ public class FHIRJsonUtil {
         }
     }
 
-    protected static StringBuilder updateResourceIdMap(JSONObject jsonObject, Map<String, Path> resourceIdToFileMap, Path file, Map<String, ParsedLogEntry> dummyEntryMap) throws IOException {
+    protected static StringBuilder updateResourceIdMap(JSONObject jsonObject, Map<String, Path> resourceIdToFileMap, Path file, Map<String, ParsedLogEntry> dummyEntryMap) {
         StringBuilder log = new StringBuilder();
         if (jsonObject.has("entry")) {
             JSONArray entries = jsonObject.getJSONArray("entry");

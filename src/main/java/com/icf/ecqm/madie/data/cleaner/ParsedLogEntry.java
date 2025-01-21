@@ -15,6 +15,7 @@ public class ParsedLogEntry {
         this.fileName = fileName;
         this.url = url;
     }
+
     public String getUrl() {
         return url;
     }

@@ -255,6 +255,7 @@ public class ResourceFactory {
                                 .put("valueDateTime", "2026-11-19T09:35:00-04:00") // Static value
                                 .put("url", "http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-recorded")));
     }
+
     protected static JSONObject getMedicationObject(String id) {
         return new JSONObject()
                 .put("resourceType", "Medication")

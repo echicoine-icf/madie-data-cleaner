@@ -1,22 +1,15 @@
 package com.icf.ecqm.madie.data.cleaner;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.SecureRandom;
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -24,16 +17,12 @@ public class Main {
     private static int totalFiles = 0;
     private static int processedFiles = 0;
     private static String phase = "";
-
     private static final StringBuilder log = new StringBuilder();
     private static final Map<String, ParsedLogEntry> dummyEntryMap = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
         Path currentDir = Paths.get("").toAbsolutePath();
 
-
-        //specify files to upload to https://fhir.ecqm.icfcloud.com/fhir/
-        String uploadFiles = "";
         boolean logFile = false;
         for (String arg : args) {
             if (arg.toLowerCase().contains("-checklogs")) {
@@ -106,7 +95,7 @@ public class Main {
             // Update the 'id' fields in 'resource'
             FHIRJsonUtil.updateResourceId(jsonObject, resourceIdToFileMap);
 
-            // Update references in 'evaluatedResource'
+            // Update references entries
             log.append(FHIRJsonUtil.updateReferences(jsonObject, fileQueue, processedFileSet, resourceIdToFileMap, jsonFile));
 
             // Save the modified jsonObject ref
